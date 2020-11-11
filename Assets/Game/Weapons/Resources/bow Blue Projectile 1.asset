@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0bf69bfc9664840b1e90e6c2028654, type: 3}
+  m_Name: bow Blue Projectile 1
+  m_EditorClassIdentifier: 
+  itemID: 440403bb-2304-4554-bbd7-67e9168c485f
+  displayName: Basic Bow
+  description: 'No lock on
+
+    Damage 10
+
+    Range 20'
+  icon: {fileID: 4949717761833437216, guid: 9b61e275f7cc73949bedafea760b9f7a, type: 3}
+  pickup: {fileID: 5866563953189524989, guid: 859954173a0bcff46b594c7958098d76, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
+  weaponAnimatorOverride: {fileID: 22100000, guid: 00493ea3b2490e045aff624edd7b97f9,
+    type: 2}
+  equippedPrefab: {fileID: 3719266934978244160, guid: 2919f5edb9a86be4aaac367591e739fd,
+    type: 3}
+  weaponDamage: 10
+  percentageBonus: 0
+  weaponRange: 20
+  isRightHanded: 0
+  projectile: {fileID: 4347877909830463542, guid: 1ad849fc770427a4696efff9e855cd7a,
+    type: 3}
+  weaponType: 3

@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0bf69bfc9664840b1e90e6c2028654, type: 3}
+  m_Name: Sword
+  m_EditorClassIdentifier: 
+  itemID: 90a6d8b4-2185-496f-b272-a6c32ff1f5bd
+  displayName: Beginner Sword
+  description: 'Damage 25
+
+    Range 2'
+  icon: {fileID: -5421027211986494622, guid: 9b61e275f7cc73949bedafea760b9f7a, type: 3}
+  pickup: {fileID: 6996321283350924228, guid: a0bfde992ac9fe34eac4219933c3217e, type: 3}
+  stackable: 0
+  allowedEquipLocation: 5
+  weaponAnimatorOverride: {fileID: 22100000, guid: 3c92be4cd12106c4e9494be41e636693,
+    type: 2}
+  equippedPrefab: {fileID: 5844494971208963997, guid: 678bd9df18d4f49409ac840fc590e361,
+    type: 3}
+  weaponDamage: 25
+  percentageBonus: 0
+  weaponRange: 2
+  isRightHanded: 1
+  projectile: {fileID: 0}
+  hasFreeFire: 0

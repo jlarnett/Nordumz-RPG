@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f20eb1792e8048a46bf5c7c520a3ea3b, type: 3}
+  m_Name: Helmet
+  m_EditorClassIdentifier: 
+  itemID: 40e00136-e798-4d0a-aad3-3e52cec48422
+  displayName: Bronze Helmet
+  description: This is  simple helmet
+  icon: {fileID: 21300000, guid: c1b61b3a91732a747a8496fc75a13fe2, type: 3}
+  pickup: {fileID: 7469718789912714413, guid: 7435de590ce59ee448c072dd1f99095f, type: 3}
+  stackable: 1
+  allowedEquipLocation: 0

@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 83d0a2373689570408a38ad77a15c0f2, type: 3}
+  m_Name: Full Health Potion
+  m_EditorClassIdentifier: 
+  itemID: 613bb181-28fb-47f4-91e3-bd8167fb4831
+  displayName: Potion Action Item
+  description: Full Health Potion
+  icon: {fileID: 21300000, guid: f1dd815974b2d4240a6bc912d6585497, type: 3}
+  pickup: {fileID: 8348226700748822249, guid: 5c21a876c21a12747ae398916c2be8a3, type: 3}
+  stackable: 1
+  consumable: 1

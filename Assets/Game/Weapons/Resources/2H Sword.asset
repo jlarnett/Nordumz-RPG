@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d0bf69bfc9664840b1e90e6c2028654, type: 3}
+  m_Name: 2H Sword
+  m_EditorClassIdentifier: 
+  itemID: b6d53935-9b03-4030-99a7-e8508a0ba3ec
+  displayName: GIGANTA SWORD
+  description: 'GIGANTA SWORD
+
+    Damage : 40
+
+    Damage Percent Boost : 50%
+
+    Range
+    35
+
+    Range'
+  icon: {fileID: 92988425954246417, guid: 9b61e275f7cc73949bedafea760b9f7a, type: 3}
+  pickup: {fileID: 8325396092156268912, guid: 3d52e92056b3a6740b8113ec0efdebfc, type: 3}
+  stackable: 1
+  allowedEquipLocation: 5
+  weaponAnimatorOverride: {fileID: 22100000, guid: c26472ecb773d38449e676b103a99b16,
+    type: 2}
+  equippedPrefab: {fileID: 6618906720345351347, guid: d0b85cb1fef7ab4479b4a04474dd1ff8,
+    type: 3}
+  weaponDamage: 40
+  percentageBonus: 50
+  weaponRange: 35
+  isRightHanded: 1
+  projectile: {fileID: 4268283521443101943, guid: 7b863750980545040a2e0509372f3270,
+    type: 3}
+  weaponType: 1

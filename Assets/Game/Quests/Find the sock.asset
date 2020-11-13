@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Find the sock
   m_EditorClassIdentifier: 
   objectives:
-  - 
-  - 
-  - 
+  - a
+  - b

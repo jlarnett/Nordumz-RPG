@@ -17,14 +17,18 @@ MonoBehaviour:
   children:
   - 22f3f7c8-ee8c-4492-b3fa-18d46e2cafe5
   - 1dba6ffd-81ad-4ac6-8ed6-355634918c72
+  - 3ec20b6e-e72f-4af0-89de-c3ec4e86ea0a
+  - 171d2b44-29f9-4c2b-b7d1-c8e6b7ac7a7d
   rect:
     serializedVersion: 2
-    x: 155
-    y: 145
+    x: 92
+    y: 107
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-2266395930866108539
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,12 +46,14 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 472
-    y: 98
+    x: 482
+    y: 122
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-2024865287555618287
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -65,12 +71,14 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 811
-    y: 258
+    x: 784
+    y: 262
     width: 200
     height: 100
   onEnterAction: GiveQuest
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-1067028294937829797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,12 +97,55 @@ MonoBehaviour:
   - 3c868c54-ebfc-411e-9337-50b9f4ee159e
   rect:
     serializedVersion: 2
-    x: 471
-    y: 262
+    x: 468
+    y: 261
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and:
+    - or:
+      - predicate: HasQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 1
+--- !u!114 &-383359880380798251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 3ec20b6e-e72f-4af0-89de-c3ec4e86ea0a
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Im Already on the case.
+  children:
+  - 6da2f60e-0cd3-4083-a3a4-15acbbb032ff
+  rect:
+    serializedVersion: 2
+    x: 470
+    y: 391
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+  condition:
+    and:
+    - or:
+      - predicate: HasQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 0
+    - or:
+      - predicate: CompletedQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 1
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -112,4 +163,99 @@ MonoBehaviour:
   - {fileID: -2266395930866108539}
   - {fileID: -1067028294937829797}
   - {fileID: -2024865287555618287}
+  - {fileID: -383359880380798251}
+  - {fileID: 741253285699349754}
+  - {fileID: 1245692987496400548}
+  - {fileID: 3637808534824902218}
   newNodeOffset: {x: 250, y: 0}
+--- !u!114 &741253285699349754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 6da2f60e-0cd3-4083-a3a4-15acbbb032ff
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Sorry, I got kicked in the head yesterday.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 772
+    y: 393
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+  condition:
+    and: []
+--- !u!114 &1245692987496400548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 171d2b44-29f9-4c2b-b7d1-c8e6b7ac7a7d
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I found the foot cream for your mom!
+  children:
+  - cc2620c1-4c44-48d9-a80e-2f1a08c86627
+  rect:
+    serializedVersion: 2
+    x: 460
+    y: 528
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+  condition:
+    and:
+    - or:
+      - predicate: HasQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 0
+    - or:
+      - predicate: HasInventoryItem
+        parameters:
+        - 60a4a665-9606-4976-83ec-0cc3f082895b
+        negate: 0
+    - or:
+      - predicate: IsObjectiveCompleted
+        parameters:
+        - 2
+        negate: 0
+--- !u!114 &3637808534824902218
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: cc2620c1-4c44-48d9-a80e-2f1a08c86627
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: OMG Thank you so much :)
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 765
+    y: 532
+    width: 200
+    height: 100
+  onEnterAction: Retrieved
+  onExitAction: 
+  condition:
+    and: []

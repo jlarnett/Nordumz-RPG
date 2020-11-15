@@ -7,8 +7,8 @@ namespace RPG.Skill
 {
     public class SkillExperience : MonoBehaviour, ISaveable
     {
-        [SerializeField] public SkillClass[] skillExpList = null;
-        [SerializeField] public Dictionary<Skill, SkillHolder> skillXpList = null;
+        [SerializeField] public SkillHolder[] SkillXpDisplayList = null;
+        private Dictionary<Skill, SkillHolder> skillXpList;
 
         private Skill currentSkill;
 
@@ -20,34 +20,65 @@ namespace RPG.Skill
         public event Action onMagicExperienceGained;                                 //Expereinced gained action / delegate  -> ACTION IS A EVENT DELAGATE WITH NO RETURN TYPE
         public event Action onWoodcuttingExperienceGained;
 
-        private CombatSkill combat = null;
+        private CombatSkill combat;
 
-        void Awake()
+        public void Awake()
         {
             combat = GetComponent<CombatSkill>();
         }
         
-        private void Start()
+        public void Start()
         {
             BuildList();
+        }
+
+        private void BuildList()
+        {
+            BuildArrayList();
+
+            if (skillXpList != null) return;
+
+            skillXpList = new Dictionary<Skill, SkillHolder>();
+
+            foreach (SkillHolder skillHolder in SkillXpDisplayList)
+            {
+                skillXpList.Add(skillHolder.skill, skillHolder);
+            }
+
+        }
+
+        private void BuildArrayList()
+        {
+
+            if (SkillXpDisplayList.Length != 0) return;
+
+            SkillXpDisplayList = new SkillHolder[Enum.GetValues(typeof(Skill)).Length];
+
+            for (int i = 0; i < SkillXpDisplayList.Length; i++)
+            {
+                SkillXpDisplayList[i] = new SkillHolder((Skill)i);
+            }
+        }
+
+        private void AssignSkillArray()
+        {
+            if (SkillXpDisplayList.Length == 0)
+                SkillXpDisplayList = new SkillHolder[skillXpList.Count];
+
+            for (int i = 0; i < SkillXpDisplayList.Length; i++)
+            {
+                SkillXpDisplayList[i] = (skillXpList[(Skill)i]);
+            }
         }
 
         public void GainCombatExperience(float exp, GameObject instigator)                       //Handles experience gained event
         {
             BuildList();
 
-            if (combat.ReturnSkillType() == null)
-            {
-                return;
-            }
+            Skill rewardSkill = combat.ReturnSkillType();
 
-            foreach (Skill combatSkill in combat.ReturnSkillType())
-            {
-                BuildList();
-
-                skillXpList[combatSkill].skillExperience += exp;
-                InvokeCorrectAction(combatSkill);
-            }
+            skillXpList[rewardSkill].skillExperience += exp;
+            InvokeCorrectAction(rewardSkill);
         }
 
         private void InvokeCorrectAction(Skill skill)
@@ -74,43 +105,6 @@ namespace RPG.Skill
             AssignSkillArray();
         }
 
-        private void AssignSkillArray()
-        {
-            if (skillExpList == null)
-                skillExpList = new SkillClass[skillXpList.Count];
-
-            for (int i = 0; i < skillExpList.Length; i++)
-            {
-                skillExpList[i] = new SkillClass(skillXpList[(Skill)i]);
-            }
-        }
-
-        private void BuildList()
-        {
-            BuildArrayList();
-
-            if (skillXpList != null) return;
-
-            skillXpList = new Dictionary<Skill, SkillHolder>();
-
-            foreach (SkillClass skillClass in skillExpList)
-            {
-                skillXpList.Add(skillClass.holder.skill, skillClass.holder);
-            }
-        }
-
-        private void BuildArrayList()
-        {
-
-            if (skillExpList != null) return;
-
-            skillExpList = new SkillClass[Enum.GetValues(typeof(Skill)).Length];
-
-            for(int i = 0; i < skillExpList.Length;)
-            {
-                skillExpList[i] = new SkillClass(new SkillHolder((Skill)i));
-            }
-        }
 
         public float GetPoints(Skill skill)
         {

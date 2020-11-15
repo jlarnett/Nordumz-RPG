@@ -13,8 +13,8 @@ namespace RPG.Skill
         [SerializeField] WeaponConfig currentWeapon;
         [SerializeField] private Skill currentCombatSkill;
 
-        private Fighter fighter = null;
-        private Equipment equipment = null;
+        private Fighter fighter;
+        private Equipment equipment;
 
 
         private void Awake()
@@ -43,15 +43,13 @@ namespace RPG.Skill
             }
         }
 
-        public IEnumerable ReturnSkillType()
+        public Skill ReturnSkillType()
         {
-            List<Skill> skill = new List<Skill>();
 
             SetCurrentWeapon();
             SetCurrentSkill();
 
-            skill.Add(currentCombatSkill);
-            return skill;
+            return currentCombatSkill;
         }
 
         private void SetCurrentSkill()

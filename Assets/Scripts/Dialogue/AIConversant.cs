@@ -1,26 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using RPG.Attributes;
+using RPG.Combat;
 using RPG.Control;
-using RPG.Dialogue;
 using UnityEngine;
-
-
-
 
 namespace RPG.Dialogue
 {
     public class AIConversant : MonoBehaviour, IRaycastable
     {
-        [SerializeField] private float interactDistance = 5f;
         [SerializeField] private Dialogue AIDialogue = null;
         [SerializeField] private string conversantName;
 
         GameObject player;
-
+        private Health health;
+        private Fighter fighter;
 
         private void Start()
         {
             player = GameObject.FindGameObjectWithTag("Player");
+            health = GetComponent<Health>();
+            fighter = GetComponent<Fighter>();
         }
 
         private void Update()
@@ -34,12 +32,12 @@ namespace RPG.Dialogue
 
         public bool HandleRaycast(PlayerController callingController)
         {
-            if (CheckDistance() != true)            //If player is not within InteractDistance player cant handle raycast
+            if (health.IsDead())            //If player is not within InteractDistance player cant handle raycast
             {
                 return false;
             }
 
-            if (AIDialogue == null)
+            if (AIDialogue == null || enabled == false || fighter.enabled)
             {
                 return false;
             }
@@ -51,20 +49,15 @@ namespace RPG.Dialogue
             return true;
         }
 
+        public Vector3 GetPosition()
+        {
+            if (transform.position == null) return Vector3.zero;
+            return transform.position;
+        }
+
         public string GetName()
         {
             return conversantName;
-        }
-
-        public bool CheckDistance()
-        {
-            float distance = Vector3.Distance(transform.position, player.transform.position);
-            if (distance > interactDistance)
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

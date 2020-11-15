@@ -9,6 +9,12 @@ namespace RPG.Combat
     [RequireComponent(typeof(Health))]
     public class CombatTarget : MonoBehaviour, IRaycastable
     {
+        private Fighter fighter;
+
+        void Awake()
+        {
+            fighter = GetComponent<Fighter>();
+        }
 
         public CursorType GetCursorType()
         {
@@ -21,6 +27,7 @@ namespace RPG.Combat
             //We simply check if we can attack and attack
 
             if (!enabled) return false;
+            if(!fighter.enabled) return false;
 
             if (!callingController.GetComponent<Fighter>().CanAttack(gameObject))  //We check if the calling player can attack the gameobject enemy attached.
             {
@@ -33,6 +40,12 @@ namespace RPG.Combat
             }
 
             return true;
+        }
+
+        public Vector3 GetPosition()
+        {
+            if (transform.position == null) return Vector3.zero;
+            return transform.position;
         }
     }
 }

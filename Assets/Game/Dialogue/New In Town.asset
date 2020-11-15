@@ -24,6 +24,8 @@ MonoBehaviour:
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-7467665657147905092
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37,16 +39,18 @@ MonoBehaviour:
   m_Name: 914cef43-3156-44f3-9f6e-e02d44ddf4a7
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 0
-  text: Psh, Kick rocks
+  text: Yeah, But why should I help you
   children: []
   rect:
     serializedVersion: 2
-    x: 884
-    y: -7
+    x: 890
+    y: 26
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-4858707603459146331
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -60,16 +64,18 @@ MonoBehaviour:
   m_Name: e1ee2717-4099-4317-8947-34563f4a5b41
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 0
-  text: You may pass sir
+  text: I just saw some inside thed castle gate yesterday!
   children: []
   rect:
     serializedVersion: 2
-    x: 1147
-    y: 124
+    x: 1143
+    y: 152
     width: 200
     height: 100
-  onEnterAction: 
-  onExitAction: TestObjective
+  onEnterAction: TestObjective
+  onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-3421186037556851520
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -89,12 +95,14 @@ MonoBehaviour:
   - 98197644-7678-4f1c-b36c-99bced41e9fc
   rect:
     serializedVersion: 2
-    x: 498
-    y: 330
+    x: 556
+    y: 294
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &-2054244182851467678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -120,6 +128,8 @@ MonoBehaviour:
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and: []
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -158,12 +168,14 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 910
-    y: 445
+    x: 807
+    y: 416
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: Attack
+  condition:
+    and: []
 --- !u!114 &3854294529615897982
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,15 +189,22 @@ MonoBehaviour:
   m_Name: 6478068a-31ad-409b-8f70-62c9d2b81f5a
   m_EditorClassIdentifier: 
   isPlayerSpeaking: 1
-  text: I have been here my whole life!
+  text: Randy said you may know something about Foot Cream!
   children:
   - 914cef43-3156-44f3-9f6e-e02d44ddf4a7
   - e1ee2717-4099-4317-8947-34563f4a5b41
   rect:
     serializedVersion: 2
-    x: 561
+    x: 563
     y: 100
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
+  condition:
+    and:
+    - or:
+      - predicate: HasQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 0

@@ -1,4 +1,4 @@
-﻿
+﻿using UnityEngine;
 
 namespace RPG.Control
 {
@@ -6,5 +6,6 @@ namespace RPG.Control
     {
         CursorType GetCursorType();
         bool HandleRaycast(PlayerController callingController);
+        Vector3 GetPosition();
     }
 }

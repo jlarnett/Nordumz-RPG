@@ -34,6 +34,12 @@ namespace RPG.Control
             return true;
         }
 
+        public Vector3 GetPosition()
+        {
+            if (transform.position == null) return Vector3.zero;
+            return transform.position;
+        }
+
         private void Awake()
         {
             pickup = GetComponent<Pickup>();

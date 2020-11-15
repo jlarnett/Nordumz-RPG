@@ -105,7 +105,6 @@ namespace RPG.Stats
 
             if (experience == null) return startingLevel;                       //if we are an enemy we stop here
 
-
             float currentXP = GetComponent<Experience>().GetPoints();                                           //Gets current XP value from Experience component
             int penultimateLevel = progression.GetLevels(Stat.ExperienceToLevelUp, characterClass);            //is level before max level 
 

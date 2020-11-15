@@ -13,4 +13,12 @@ MonoBehaviour:
   m_Name: Woahh Dont go running soldier
   m_EditorClassIdentifier: 
   objectives:
-  - 2
+  - reference: 2
+    description: Ask jake if he has seen any foot cream.
+  - reference: 3
+    description: Bring back foot cream too Randy.
+  rewards:
+  - number: 2
+    item: {fileID: 11400000, guid: 2b6b0541279bffb4399333824da06dc7, type: 2}
+  - number: 1
+    item: {fileID: 11400000, guid: d98752c3ba795a3439b1f2599f1f514c, type: 2}

@@ -1,4 +1,5 @@
-﻿using GameDevTV.Saving;
+﻿using System.Runtime.InteropServices.ComTypes;
+using GameDevTV.Saving;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
@@ -23,11 +24,6 @@ namespace RPG.Movement
             //Assigns NavmeshAgent to Whatever Gameobject Assigned (Character) Component<NavMeshAgent>
             NavMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
-        }
-
-        private void Start()
-        {
-
         }
 
         void Update()

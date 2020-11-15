@@ -61,6 +61,12 @@ namespace RPG.Combat
             return true;            //returns true that yes it is hitting me an raycastable object cant do other stuff
         }
 
+        public Vector3 GetPosition()
+        {
+            if (transform.position == null) return Vector3.zero;
+            return transform.position;
+        }
+
         public CursorType GetCursorType()
         {
             return CursorType.Pickup;

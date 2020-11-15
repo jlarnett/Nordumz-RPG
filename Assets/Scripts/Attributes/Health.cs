@@ -82,14 +82,10 @@ namespace RPG.Attributes
             SkillExperience exp = instigator.GetComponent<SkillExperience>();
 
             if (experience == null) return;
-
             experience.GainExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward), instigator);         //Adds experience to instigator based upon BaseStats method.
 
-
-            if (true)
-            {
-                exp.GainCombatExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward), instigator);
-            }
+            if(exp == null) return;
+            exp.GainCombatExperience(GetComponent<BaseStats>().GetStat(Stat.ExperienceReward), instigator);
         }
 
         internal void takeDamageFree(GameObject gameObject, float damage)

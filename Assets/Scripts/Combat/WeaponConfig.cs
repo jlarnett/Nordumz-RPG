@@ -17,6 +17,7 @@ namespace RPG.Combat
         [SerializeField] public float weaponRange = 2f;                      //Weapon range -> distance character stops away from target
         [SerializeField] public bool isRightHanded = true;  //Determines if weapon is right or left handed.
         [SerializeField] public Projectile projectile = null;
+
         [SerializeField] public WeaponType weaponType;
 
         private const string weaponName = "Weapon";
@@ -118,6 +119,11 @@ namespace RPG.Combat
             {
                 yield return weaponDamage;
             }
+        }
+
+        public WeaponType GetWeaponType()
+        {
+            return weaponType;
         }
 
         public IEnumerable<float> GetPercentageModifiers(Stat stat)

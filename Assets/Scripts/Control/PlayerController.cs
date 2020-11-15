@@ -1,5 +1,7 @@
 ﻿using System;
 using GameDevTV.Inventories;
+using GameDevTV.UI;
+using GameDevTV.UI.Inventories;
 using RPG.Movement;
 using UnityEngine;
 using RPG.Attributes;
@@ -18,13 +20,20 @@ namespace RPG.Control
         [SerializeField] public float maxNavMeshProjectionDistance = 1f;
         [SerializeField] public float raycastRadius = 1f;
         [SerializeField] public float teleportDistance = 40;
+        [SerializeField] public float MovementBufferDistance = 1;
+        [SerializeField] public float InteractBufferDistance = 7;
+        [SerializeField] private ShowHideUI ShowHideUI = null;
 
+
+
+        private Mover mover;
         private Health health;
         private bool isDraggingUI = false;
 
         private void Awake()
         {
             health = GetComponent<Health>();    //On Start initialize Health component
+            mover = GetComponent<Mover>();
         }
         void Update()
         {
@@ -43,7 +52,7 @@ namespace RPG.Control
             {
                 if (Input.GetMouseButtonDown(0))    //This handles canceling dialogue if the player clicks to run after dialogue starts.
                 {
-                    MovementDialogueCancel();
+                    MovementCancel();
                 }
 
                 return;
@@ -91,10 +100,20 @@ namespace RPG.Control
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();      //Check all hits to sett if it has Iraycastable component. and then store them in array.
                 foreach (IRaycastable raycastable in raycastables)      //We cycle through all the raycastable components we collected in our hits
                 {
-                    if (raycastable.HandleRaycast(this))            //If the raycastables Handle Raycast method is true we return true & set combat curser
+
+                    if (Vector3.Distance(transform.position, raycastable.GetPosition()) < InteractBufferDistance)
                     {
-                        SetCursor(raycastable.GetCursorType());     //Sets the cursor = too the value set in iraycastable implementation
-                        return true;
+                        mover.Cancel();
+
+                        if (raycastable.HandleRaycast(this))            //If the raycastables Handle Raycast method is true we return true & set combat curser
+                        {
+                            SetCursor(raycastable.GetCursorType());     //Sets the cursor = too the value set in iraycastable implementation
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
             }
@@ -117,13 +136,18 @@ namespace RPG.Control
 
             if (hasHit) //If we hit
             {
-                if (!GetComponent<Mover>().CanMoveTo(target)) return false; //If we cant move to this target stop
+                if (!mover.CanMoveTo(target)) return false; //If we cant move to this target stop
 
                 if (Input.GetMouseButton(0))
                 {
-                    GetComponent<Mover>()
-                        .StartMoveAction(target,
-                            playerSpeedFraction); //Speed fraction alters player speed mainly for AI dashing
+                    mover.StartMoveAction(target, playerSpeedFraction);
+                    //Speed fraction alters player speed mainly for AI dashing
+                }
+
+                //Test experiement
+                if (Vector3.Distance(transform.position, target) < MovementBufferDistance)
+                {
+                    mover.Cancel();
                 }
 
                 SetCursor(CursorType.Movement);
@@ -262,15 +286,20 @@ namespace RPG.Control
                 if (GetComponent<Mover>().CanMoveTo(target))
                 {
                     if (Vector3.Distance(transform.position, target) > teleportDistance) return;
-                    GetComponent<Mover>().Teleport(target);
+                    mover.Teleport(target);
                 }
             }
         }
 
-        private void MovementDialogueCancel()
+        private void MovementCancel()
         {
             //This handles canceling player dialogue if they click and begin moving after they start dialogue
             GetComponent<PlayerConversant>().Quit();
+
+            if (ShowHideUI != null)
+            {
+                ShowHideUI.HideOtherInventory(ShowHideUI.gameObject);
+            }
         }
     }
 }

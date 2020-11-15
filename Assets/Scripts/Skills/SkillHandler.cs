@@ -19,6 +19,7 @@ namespace RPG.Skill
 
         private SkillExperience experience;
         private Skill currentSkill;
+        private CombatSkill combatSkill;
 
         private float attackBonus = 0;
         private float strengthBonus = 0;
@@ -30,6 +31,7 @@ namespace RPG.Skill
 
         private void Awake()
         {
+            combatSkill = GetComponent<CombatSkill>();
             experience = GetComponent<SkillExperience>();                 //Get the Experience component connected to gameobject
         }
 
@@ -49,6 +51,8 @@ namespace RPG.Skill
                 skillLookup.Add(skill, new PrimarySkill(skill));
             }
         }
+
+        #region EventHookups
 
         private void OnEnable() //Called around same time as awake but always after
         {
@@ -73,13 +77,14 @@ namespace RPG.Skill
                 experience.onMagicExperienceGained -= UpdateCurrentLevel;
             }
         }
+        
+        #endregion
 
         public int CalculateLevel(Skill skill)                                             //Calculates gameobjects level based upon Expereience component.
         {
-            SkillExperience experience = GetComponent<SkillExperience>();                 //Gets experience component of gameobject
             if (experience == null) return startingLevel;                       //if we are an enemy we stop here
 
-            float currentXP = GetComponent<SkillExperience>().GetPoints(skill);                                           //Gets current XP value from Experience component
+            float currentXP = experience.GetPoints(skill);                                           //Gets current XP value from Experience component
             int penultimateLevel = progression.GetLevels(skill);            //is level before max level 
 
             for (int levels = 1; levels <= penultimateLevel; levels++)                                          //Loops through all levels until = to penultimateLevel
@@ -102,7 +107,6 @@ namespace RPG.Skill
             Instantiate(levelUpParticleEffect, transform);
         }
 
-
         //=
         public int GetLevelFromList(Skill skill)
         {
@@ -114,10 +118,11 @@ namespace RPG.Skill
 
         private void UpdateCurrentLevel()
         {
-            if (GetComponent<CombatSkill>() == null) return;
-            currentSkill = GetComponent<CombatSkill>().GetCurrentSkill();
+            if (combatSkill == null) return;
+            currentSkill = combatSkill.GetCurrentSkill();
 
             UpdateLevel(currentSkill);
+            PrintSkillLevels();
         }
 
         private void UpdateLevel(Skill currentSkill)
@@ -152,32 +157,33 @@ namespace RPG.Skill
 
             foreach (var VARIABLE in skillLookup)
             {
-                for (int i = 0; i < VARIABLE.Value.skillLevel; i++)
+                if (VARIABLE.Key == Skill.Attack)
                 {
-                    if (VARIABLE.Key == Skill.Attack)
-                    {
-                        attackBonus += 2;
-                    }
-                    if (VARIABLE.Key == Skill.Strength)
-                    {
-                       strengthBonus += 2;
-                    }
-                    if (VARIABLE.Key == Skill.Defence)
-                    {
-                        DefenceBonus += 2;
-                    }
-                    if (VARIABLE.Key == Skill.Archery)
-                    {
-                        ArcheryBonus += 2;
-                    }
-                    if (VARIABLE.Key == Skill.Magic)
-                    {
-                        MagicBonus += 2;
-                    }
+                    attackBonus = VARIABLE.Value.GetSkillBonus();
+                }
+
+                if (VARIABLE.Key == Skill.Strength)
+                {
+                    strengthBonus += VARIABLE.Value.GetSkillBonus();
+                }
+
+                if (VARIABLE.Key == Skill.Defence)
+                {
+                    DefenceBonus += VARIABLE.Value.GetSkillBonus();
+                }
+
+                if (VARIABLE.Key == Skill.Archery)
+                {
+                    ArcheryBonus += VARIABLE.Value.GetSkillBonus();
+                }
+
+                if (VARIABLE.Key == Skill.Magic)
+                {
+                    MagicBonus += VARIABLE.Value.GetSkillBonus();
                 }
             }
-
         }
+        
 
         public IEnumerable<float> GetAdditiveModifiers(Stat stat)
         {
@@ -193,6 +199,16 @@ namespace RPG.Skill
         {
             yield return 0;
         }
+
+        public void PrintSkillLevels()
+        {
+            foreach (var item in skillLookup)
+            {
+                Debug.Log("Skill: " + item.Key + "Level: " + item.Value.skillLevel);
+
+            }
+        }
+
     }
 }
 

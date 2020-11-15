@@ -1,0 +1,318 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-8314661610596826467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: c3bda68a-79de-4ead-aaf9-31ccfbec5b94
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: '*Leave*'
+  children:
+  - 16c04da3-b434-46c6-ba41-533c36d0a181
+  rect:
+    serializedVersion: 2
+    x: 1253
+    y: 351
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-6336965941356102000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 81e83b85-5ae7-43d1-9771-8d75e65d3237
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Thank you, Go speak to General Zordra near the church.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1496
+    y: 68
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-5636766868646129783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: e3f08794-8fd5-42ad-a317-af2b6ae97f9e
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: AHH harry never has been able to keep his mouth shut. So he told you about
+    the upcoming invasion?
+  children:
+  - 70f34d96-e72e-4e13-b419-6774f130b625
+  rect:
+    serializedVersion: 2
+    x: 950
+    y: 121
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-5253204976083104267
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: f16af192-8c44-4419-a4bf-c604af7db173
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Ha! you came to my kingdom and make demands say another word and Ill have
+    the guards throw you in a cell.
+  children:
+  - a6689d37-1864-4715-8920-bbf7734a0215
+  - c3bda68a-79de-4ead-aaf9-31ccfbec5b94
+  rect:
+    serializedVersion: 2
+    x: 921
+    y: 262
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-4968332430063642331
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: a6689d37-1864-4715-8920-bbf7734a0215
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: '*Speak*'
+  children:
+  - b95b0e4f-7d89-4ffa-b6b9-94de78c80920
+  rect:
+    serializedVersion: 2
+    x: 1255
+    y: 243
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-4626568455793446596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 70f34d96-e72e-4e13-b419-6774f130b625
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: Yes, I told him I thought I could help your kingdom survive netherwall
+  children:
+  - 81e83b85-5ae7-43d1-9771-8d75e65d3237
+  rect:
+    serializedVersion: 2
+    x: 1241
+    y: 68
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-3565345165148071036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: cfd87f2e-209f-4d2b-b12d-59025e217c7b
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: I have came for riches, alcohol, and ladies of the night. Have you seen any?
+  children:
+  - 32efba0c-71ad-4ac7-9a45-016e0f92406e
+  - f16af192-8c44-4419-a4bf-c604af7db173
+  rect:
+    serializedVersion: 2
+    x: 606
+    y: 289
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-2602737447632405083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 16c04da3-b434-46c6-ba41-533c36d0a181
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Good get the fuck out of here.
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1492
+    y: 353
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &-254709977285237484
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 32efba0c-71ad-4ac7-9a45-016e0f92406e
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Sluts of plenty in the Kingdom of eldera. Come with me sir!
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 922
+    y: 452
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a9f84d4be1b24894cadeda8138d06719, type: 3}
+  m_Name: King Dizzle Speech
+  m_EditorClassIdentifier: 
+  nodes:
+  - {fileID: 2835847594377435912}
+  - {fileID: 1397321326744141852}
+  - {fileID: -3565345165148071036}
+  - {fileID: -254709977285237484}
+  - {fileID: -5253204976083104267}
+  - {fileID: -5636766868646129783}
+  - {fileID: -4626568455793446596}
+  - {fileID: -4968332430063642331}
+  - {fileID: -8314661610596826467}
+  - {fileID: -2602737447632405083}
+  - {fileID: 3972095776753097679}
+  - {fileID: -6336965941356102000}
+  newNodeOffset: {x: 250, y: 0}
+--- !u!114 &1397321326744141852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: b76d40b3-7065-4080-8b15-b393e6abda9b
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 1
+  text: The archer outside the gates told me to speak to you immediately about issues
+    among the city
+  children:
+  - e3f08794-8fd5-42ad-a317-af2b6ae97f9e
+  rect:
+    serializedVersion: 2
+    x: 612
+    y: 123
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &2835847594377435912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: 5ec36e76-5a91-4366-add2-313fb3aa7d5b
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Welcome young Lad! What have you came to me for?
+  children:
+  - b76d40b3-7065-4080-8b15-b393e6abda9b
+  - cfd87f2e-209f-4d2b-b12d-59025e217c7b
+  rect:
+    serializedVersion: 2
+    x: 250
+    y: 243
+    width: 200
+    height: 100
+  onEnterAction: 
+  onExitAction: 
+--- !u!114 &3972095776753097679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a0223109700201340970eebbcfffc26d, type: 3}
+  m_Name: b95b0e4f-7d89-4ffa-b6b9-94de78c80920
+  m_EditorClassIdentifier: 
+  isPlayerSpeaking: 0
+  text: Attack!
+  children: []
+  rect:
+    serializedVersion: 2
+    x: 1496
+    y: 244
+    width: 200
+    height: 100
+  onEnterAction: Attack
+  onExitAction: 

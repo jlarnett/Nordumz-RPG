@@ -53,7 +53,6 @@ namespace RPG.Skill
         {
             public Skill skill;
             public float[] levels;
-
         }
     }
 }

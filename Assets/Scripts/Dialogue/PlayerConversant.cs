@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using RPG.Core;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -81,7 +82,7 @@ namespace RPG.Dialogue
         public IEnumerable<DialogueNode> GetChoices()
         {
             //returns all player dialogue children for current node and return choices
-            return currentDialogue.GetPlayerChildren(currentNode);
+            return FilterOnCondition(currentDialogue.GetPlayerChildren(currentNode));
         }
 
         public void SelectChoice(DialogueNode chosenNode)
@@ -96,7 +97,7 @@ namespace RPG.Dialogue
         public void Next()
         {
             //Checks if the next step in the dialogue is a player choice or not. and then progresses the dialogue text with randomness included
-            int numPlayerResponses = currentDialogue.GetPlayerChildren(currentNode).Count();
+            int numPlayerResponses = FilterOnCondition(currentDialogue.GetPlayerChildren(currentNode)).Count();
             if (numPlayerResponses > 0)
             {
                 isChoosing = true;
@@ -107,7 +108,7 @@ namespace RPG.Dialogue
             }
 
             //Gets all children for AI dialogue and randomly selects which route it goes
-            DialogueNode[] children = currentDialogue.GetAIChildren(currentNode).ToArray();
+            DialogueNode[] children = FilterOnCondition(currentDialogue.GetAIChildren(currentNode)).ToArray();
             int randomIndex = Random.Range(0, children.Count());
 
             TriggerExitAction();
@@ -120,7 +121,23 @@ namespace RPG.Dialogue
         public bool HasNext()
         {
             //returns if we are at end of dialogue or not.
-            return currentDialogue.GetAllChildren(currentNode).Count() > 0;
+            return FilterOnCondition(currentDialogue.GetAllChildren(currentNode)).Count() > 0;
+        }
+
+        private IEnumerable<DialogueNode> FilterOnCondition(IEnumerable<DialogueNode> inputNode)
+        {
+            foreach (var node in inputNode)
+            {
+                if (node.CheckCondition(GetEvaluators()))
+                {
+                    yield return node;
+                }
+            }
+        }
+
+        private IEnumerable<IPredicateEvaluator> GetEvaluators()
+        {
+            return GetComponents<IPredicateEvaluator>();
         }
 
         private void TriggerEnterAction()

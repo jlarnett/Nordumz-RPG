@@ -1,5 +1,4 @@
-﻿using System.Runtime.InteropServices.ComTypes;
-using GameDevTV.Saving;
+﻿using GameDevTV.Saving;
 using RPG.Core;
 using UnityEngine;
 using UnityEngine.AI;
@@ -9,21 +8,24 @@ namespace RPG.Movement
 {
     public class Mover : MonoBehaviour, IAction, ISaveable
     {
-        //Target Unity Field
-        [SerializeField] private Transform target;
-        [SerializeField] public float maxSpeed = 6; //Max Speed for player & Enemy Movement
-        [SerializeField] public float maxNavPathLength = 40f;
+        [SerializeField] private Transform target;              //target walk position
+        [SerializeField] private float maxSpeed = 6;            //Max walk speed. Somehow bottlenecked by animator.
+        [SerializeField] private float maxNavPathLength = 40f;  //Max click distance.
 
-
-        //Private NavMeshAgent
+        //Class References
+        private ActionScheduler actionScheduler;
         private NavMeshAgent NavMeshAgent;
         private Health health;
+        private Animator animator;
 
         private void Awake()
         {
             //Assigns NavmeshAgent to Whatever Gameobject Assigned (Character) Component<NavMeshAgent>
             NavMeshAgent = GetComponent<NavMeshAgent>();
             health = GetComponent<Health>();
+            actionScheduler = GetComponent<ActionScheduler>();
+            animator = GetComponent<Animator>();
+
         }
 
         void Update()
@@ -37,8 +39,8 @@ namespace RPG.Movement
             NavMeshPath path = new NavMeshPath();
             bool hasPath = NavMesh.CalculatePath(transform.position, destination, NavMesh.AllAreas, path);          //We get the path our player is trying to take
 
-            if (!hasPath) return false;     //If we dont have path return false
-            if (path.status != NavMeshPathStatus.PathComplete) return false;        //Keep from using incomplete paths
+            if (!hasPath) return false;                                             //If we dont have path return false
+            if (path.status != NavMeshPathStatus.PathComplete) return false;        //Keep from using incomplete paths... may change later for teleporting over water
             if (GetPathLength(path) > maxNavPathLength) return false;
 
             return true;
@@ -46,8 +48,8 @@ namespace RPG.Movement
 
         public void StartMoveAction(Vector3 destination, float speedFraction)
         {
-            //Gets ActionScheduler.StartAction(this) passes mover object && then calls Fighter.Cancel() Component. Then MoveTo(destination)
-            GetComponent<ActionScheduler>().StartAction(this);
+            //Calls actionscheduler to start action. This takes care of any overhead the action needs before starting.
+            actionScheduler.StartAction(this);
             MoveTo(destination, speedFraction);
         }
 
@@ -58,7 +60,7 @@ namespace RPG.Movement
 
             if (path.corners.Length < 2) return totalPathLength;        //Protects against short path error
 
-            for (int i = 0; i < path.corners.Length - 1; i++)   //Loops through and sums total distance between path corners
+            for (int i = 0; i < path.corners.Length - 1; i++)           //Loops through and sums total distance between path corners
             {
                 totalPathLength += Vector3.Distance(path.corners[i], path.corners[i + 1]);
             }
@@ -70,8 +72,8 @@ namespace RPG.Movement
         public void MoveTo(Vector3 destination,float speedFraction)
         {
             //Sets NavMeshAgents destination to Vector3 Destination && makes sure agents.isStopped = false -> Moves character
-            GetComponent<NavMeshAgent>().enabled = true;
-            GetComponent<NavMeshAgent>().destination = destination;
+            NavMeshAgent.enabled = true;
+            NavMeshAgent.destination = destination;
             NavMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             NavMeshAgent.isStopped = false;
         }
@@ -85,11 +87,11 @@ namespace RPG.Movement
         private void UpdateAnimator()
         {
             //Tells animator your moving foward at X units istead of global works better for animators.
-            Vector3 velocity = GetComponent<NavMeshAgent>().velocity;
+            Vector3 velocity = NavMeshAgent.velocity;
             Vector3 localVelocity = transform.InverseTransformDirection(velocity);  // Takes the global Vector3 position & turns into local
             float speed = localVelocity.z;
 
-            GetComponent<Animator>().SetFloat("fowardSpeed", speed); //Passes speed value into Animator blend or fowardspeed value
+            animator.SetFloat("fowardSpeed", speed); //Passes speed value into Animator blend or fowardspeed value
         }
 
         public object CaptureState()        //Notice return type is object
@@ -104,22 +106,24 @@ namespace RPG.Movement
 
         public void RestoreState(object state)      //Notice parameter is object
         {
+            //Restores state upon load
             MoverSaveData data = (MoverSaveData)state;   //------------------------------- WATCH FOR ERROR IF SO USE OTHER CAST METHOD
 
-            GetComponent<NavMeshAgent>().enabled = false;
+            NavMeshAgent.enabled = false;
 
-            transform.position = data.position.ToVector();                     //Sets our movers position back to saved value
-            transform.eulerAngles = data.rotation.ToVector();                     //Sets our movers position back to saved value
+            transform.position = data.position.ToVector();                      //Sets our movers position back to saved value
+            transform.eulerAngles = data.rotation.ToVector();                   //Sets our movers position back to saved value
 
-            GetComponent<NavMeshAgent>().enabled = true;                        //Stops navmeshagent from messing with us chaning position
+            NavMeshAgent.enabled = true;                                        //Stops navmeshagent from messing with us chaning position
 
         }
 
         public void Teleport(Vector3 destination)
         {
-            GetComponent<NavMeshAgent>().enabled = false;
+            //Extremely primitive teleport. Use for Dev purposes mainly. Want to implement better teleports based on inventory.
+            NavMeshAgent.enabled = false;
             transform.position = destination;
-            GetComponent<NavMeshAgent>().enabled = true;
+            NavMeshAgent.enabled = true;
         }
 
         [System.Serializable]

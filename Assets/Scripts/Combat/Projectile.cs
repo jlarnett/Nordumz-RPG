@@ -8,15 +8,16 @@ namespace RPG.Combat
     {
         [SerializeField] public UnityEvent onHit;
 
-        [SerializeField] public float projectileSpeed = 5f;
-        [SerializeField] public bool isHoming = true;
-        [SerializeField] public GameObject hitEffect = null;
-        [SerializeField] public float maxLifeTime = 10;         //How long before projectile is destroyed in scene
+        [SerializeField] private float projectileSpeed = 5f;
+        [SerializeField] private bool isHoming = true;
+        [SerializeField] private GameObject hitEffect = null;
+        [SerializeField] private float maxLifeTime = 10;         //How long before projectile is destroyed in scene
         [SerializeField] private GameObject[] destroyOnHit = null;      //Array of projectile parts to destroy on impact with enemy
-        [SerializeField] public float lifeAfterImpact = 2;
+        [SerializeField] private float lifeAfterImpact = 2;
 
         private GameObject instigator = null;           //the person who shot the projectile
         private Health target = null;
+
         private float damage = 0;
 
         private void Start()
@@ -50,6 +51,7 @@ namespace RPG.Combat
         
         private Vector3 GetAimLocation()
         {
+            //Returns location of target
             CapsuleCollider targetCapsule = target.GetComponent<CapsuleCollider>();
 
             if (targetCapsule == null)
@@ -62,6 +64,7 @@ namespace RPG.Combat
 
         private void OnTriggerEnter(Collider other)
         {
+            //Handles impact event damages health component of collided target. and then destroys project in section
             if (other.GetComponent<Health>() != target) return;     //if health component is not equal to target exit
             if (target.IsDead()) return;    //If target is dead exit
 

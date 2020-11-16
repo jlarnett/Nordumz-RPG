@@ -9,17 +9,18 @@ using UnityEngine;
 public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
 {
     List<QuestStatus> statuses = new List<QuestStatus>();
+    Dictionary<string, Quest> CompletedStatuses = new Dictionary<string, Quest>();
 
     public event Action onUpdate;
     
     public void AddQuest(Quest quest)
     {
+        QuestStatus newStatus = new QuestStatus(quest);
 
         if (HasQuest(quest)) return;
+        if (CompletedQuest(newStatus)) return;
 
-        QuestStatus newStatus = new QuestStatus(quest);
         statuses.Add(newStatus);
-
 
         if(onUpdate == null) return;
         onUpdate();
@@ -28,6 +29,11 @@ public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
     public bool HasQuest(Quest quest)
     {
         return GetQuestStatus(quest) != null;
+    }
+
+    public bool CompletedQuest(QuestStatus QuestStatus)
+    {
+        return CompletedStatuses.ContainsKey(QuestStatus.GetQuest().GetTitle());
     }
 
     private QuestStatus GetQuestStatus(Quest quest)
@@ -60,6 +66,8 @@ public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
         if (status.IsComplete())
         {
             GiveReward(quest);
+            CompletedStatuses.Add(quest.GetTitle(), quest);
+            statuses.Remove(status);
         }
 
         if (onUpdate != null)
@@ -118,7 +126,7 @@ public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
                 return HasQuest(Quest.GetByName(parameters[0]));
 
             case "CompletedQuest":
-                return GetQuestStatus(Quest.GetByName(parameters[0])).IsComplete();
+                return CompletedQuest(new QuestStatus(parameters[0]));
         }
 
         return null;

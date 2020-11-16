@@ -13,44 +13,45 @@ namespace RPG.Control
 {
     public class PlayerController : MonoBehaviour
     {
-       // public InventoryObject inventory;
-
-        [SerializeField] public float playerSpeedFraction = 1f; //Handles player run speed when attacking.
-        [SerializeField] private CursorMapping[] cursorMappings = null;
-        [SerializeField] public float maxNavMeshProjectionDistance = 1f;
-        [SerializeField] public float raycastRadius = 1f;
-        [SerializeField] public float teleportDistance = 40;
-        [SerializeField] public float MovementBufferDistance = 1;
-        [SerializeField] public float InteractBufferDistance = 7;
+        [SerializeField] private float playerSpeedFraction = 1f;                     //Handles player run speed when attacking. 1 = max
+        [SerializeField] private CursorMapping[] cursorMappings = null;             //Array of cursorMappings for hovering over raycastable items
+        [SerializeField] private float maxNavMeshProjectionDistance = 1f;            //Not sure
+        [SerializeField] private float raycastRadius = 1f;                          //raycast size
+        [SerializeField] private float teleportDistance = 40;                       //total teleport distance in vector3 distance
+        [SerializeField] private float MovementBufferDistance = 1;                   //Movement buffer distance
+        [SerializeField] private float InteractBufferDistance = 7;                  //interact buffer distance
         [SerializeField] private ShowHideUI ShowHideUI = null;
 
+        private bool isDraggingUI = false;
 
-
+        //Class References
         private Mover mover;
         private Health health;
-        private bool isDraggingUI = false;
+        private PlayerConversant playerConversant;
 
         private void Awake()
         {
-            health = GetComponent<Health>();    //On Start initialize Health component
+            //Initialize components
+            health = GetComponent<Health>();            
             mover = GetComponent<Mover>();
         }
         void Update()
         {
-            if (InteractWithUI()) return;   //If player is interacting with UI stop here and dont interact with anything else.      //This is here to give player option to interact with UI while dead even
+            //On Update Interaction Manager function. UI, Components, Movement
+            if (InteractWithUI()) return;                   //If player is interacting with UI stop here and dont interact with anything else.      //This is here to give player option to interact with UI while dead even
 
             if(health.IsDead())
             {
-                SetCursor(CursorType.None);     //movement cursor cause it is best
-                return; //if character is dead do no interacting at all. - So takes control away if dead
+                SetCursor(CursorType.None);                 //movement cursor cause it is best
+                return;                                     //if character is dead do no interacting at all. - So takes control away if dead
             }
 
-            CheckSpecialAbilityKeys();      //Update
+            CheckSpecialAbilityKeys();                      //Update
 
             if (InteractWithComponent()) return;            //Interact with IRAYCASTABLE components in the world
             if (InteractWithMovement())
             {
-                if (Input.GetMouseButtonDown(0))    //This handles canceling dialogue if the player clicks to run after dialogue starts.
+                if (Input.GetMouseButtonDown(0))            //This handles canceling dialogue if the player clicks to run after dialogue starts.
                 {
                     MovementCancel();
                 }
@@ -58,14 +59,13 @@ namespace RPG.Control
                 return;
             }                 
 
-            SetCursor(CursorType.None);     //Default Cursor set if we make it this far in Update
+            SetCursor(CursorType.None);                         //Default Cursor set if we make it this far in Update
         }
 
         private bool InteractWithUI()
         {
-
-            //if (EventSystem.current == null) return false;
-
+            //Interact Order 0
+            //Handles player controller UI interaction behavior
             if (Input.GetMouseButtonUp(0))          //If mouse button is up is dragging is = false
             {
                 isDraggingUI = false;
@@ -93,14 +93,17 @@ namespace RPG.Control
 
         private bool InteractWithComponent()
         {
-            RaycastHit[] hits = RaycastAllSorted();      // Get all hits from mouse raycast
+            //Interact Order 1
+            //Extremely important. Interacts with all raycastable items that can be clicked. Sorted in order of closeness of position.
+            RaycastHit[] hits = RaycastAllSorted();                                 // Get all hits from mouse raycast
 
-            foreach (RaycastHit hit in hits)        //We go through all hits in the raycast
+            foreach (RaycastHit hit in hits)                                        //We go through all hits in the raycast
             {
                 IRaycastable[] raycastables = hit.transform.GetComponents<IRaycastable>();      //Check all hits to sett if it has Iraycastable component. and then store them in array.
-                foreach (IRaycastable raycastable in raycastables)      //We cycle through all the raycastable components we collected in our hits
+                foreach (IRaycastable raycastable in raycastables)                              //We cycle through all the raycastable components we collected in our hits
                 {
 
+                    //Positionaly blocker. A little blocky but keeps from interacting with items too soon. Want to maybe make Iactionable later so that it smoother?
                     if (Vector3.Distance(transform.position, raycastable.GetPosition()) < InteractBufferDistance)
                     {
                         mover.Cancel();
@@ -118,7 +121,7 @@ namespace RPG.Control
                 }
             }
 
-            return false;               //If we make it here on the update cycle that means there were no raycastable components
+            return false;                                                   //If we make it here on the update cycle that means there were no raycastable components
         }
 
         private bool InteractWithMovement()
@@ -130,9 +133,7 @@ namespace RPG.Control
             //            bool hasHit = Physics.Raycast(GetMouseRay(), out hit);
 
             Vector3 target;
-            bool hasHit =
-                RaycastNavMesh(
-                    out target); //bool that verifies if we hit a navemesh target & passes it out to vecto3 target
+            bool hasHit = RaycastNavMesh(out target); //bool that verifies if we hit a navemesh target & passes it out to vecto3 target
 
             if (hasHit) //If we hit
             {
@@ -160,6 +161,7 @@ namespace RPG.Control
 
         RaycastHit[] RaycastAllSorted()
         {
+            //Sorts the order of raycast relative to distance of camera
             //Get all hits
             RaycastHit[] hits = Physics.SphereCastAll(GetMouseRay(), raycastRadius);
 
@@ -181,6 +183,7 @@ namespace RPG.Control
 
         private bool RaycastNavMesh(out Vector3 target)
         {
+            //Raycast the navmesh and out returns a vector3 to our private target variable.
             target = new Vector3();
 
             //Raycast to terrain
@@ -207,12 +210,14 @@ namespace RPG.Control
 
         private void SetCursor(CursorType type)
         {
+            //Setrs the cursor depending on the cursorType passed in.
             CursorMapping mapping = GetCursorMapping(type);
             Cursor.SetCursor(mapping.texture, mapping.hotspot, CursorMode.Auto);
         }
 
         private CursorMapping GetCursorMapping(CursorType type)
         {
+            //Returns cursormapping based on the type pased in.
             foreach (CursorMapping mapping in cursorMappings)       // foreach mapping item in cursorMappings. If it equals the type passed in we return matched mapping
             {
                 if (mapping.type == type)
@@ -234,11 +239,6 @@ namespace RPG.Control
 
         public void OnTriggerEnter(Collider other)
         {
-            //var item = other.GetComponent<GroundItem>();  //set item = item of colliders component
-            //if (item)
-            //{
-              //  Destroy(other.gameObject);  //destroys object that was added to inventory
-            //}
         }
 
         private void CheckSpecialAbilityKeys()
@@ -277,13 +277,11 @@ namespace RPG.Control
 
         private void Teleport()
         {
-            Vector3 target;
-
-            bool hasHit = RaycastNavMesh(out target);
+            bool hasHit = RaycastNavMesh(out var target);
 
             if (hasHit)
             {
-                if (GetComponent<Mover>().CanMoveTo(target))
+                if (mover.CanMoveTo(target))
                 {
                     if (Vector3.Distance(transform.position, target) > teleportDistance) return;
                     mover.Teleport(target);
@@ -294,7 +292,10 @@ namespace RPG.Control
         private void MovementCancel()
         {
             //This handles canceling player dialogue if they click and begin moving after they start dialogue
-            GetComponent<PlayerConversant>().Quit();
+            if (playerConversant != null)
+            {
+                playerConversant.Quit();
+            }
 
             if (ShowHideUI != null)
             {

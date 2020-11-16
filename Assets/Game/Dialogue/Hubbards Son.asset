@@ -46,7 +46,7 @@ MonoBehaviour:
   children: []
   rect:
     serializedVersion: 2
-    x: 482
+    x: 469
     y: 122
     width: 200
     height: 100
@@ -97,14 +97,19 @@ MonoBehaviour:
   - 3c868c54-ebfc-411e-9337-50b9f4ee159e
   rect:
     serializedVersion: 2
-    x: 468
-    y: 261
+    x: 458
+    y: 267
     width: 200
     height: 100
   onEnterAction: 
   onExitAction: 
   condition:
     and:
+    - or:
+      - predicate: CompletedQuest
+        parameters:
+        - Woahh Dont go running soldier
+        negate: 1
     - or:
       - predicate: HasQuest
         parameters:
@@ -128,8 +133,8 @@ MonoBehaviour:
   - 6da2f60e-0cd3-4083-a3a4-15acbbb032ff
   rect:
     serializedVersion: 2
-    x: 470
-    y: 391
+    x: 450
+    y: 403
     width: 200
     height: 100
   onEnterAction: 

@@ -25,7 +25,7 @@ namespace RPG.Skill
 
         private void Start()
         {
-            currentWeapon = fighter.currentWeaponConfig;
+            currentWeapon = fighter.GetCurrentWeaponConfig();
         }
 
         private void OnEnable() //Called around same time as awake but always after
@@ -83,7 +83,7 @@ namespace RPG.Skill
 
         public void SetCurrentWeapon()
         {
-            currentWeapon = fighter.currentWeaponConfig;
+            currentWeapon = fighter.GetCurrentWeaponConfig();
         }
 
         public Skill GetCurrentSkill()

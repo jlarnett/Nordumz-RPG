@@ -13,31 +13,41 @@ namespace RPG.Combat
 {
     public class Fighter : MonoBehaviour, IAction, ISaveable
     {
-        [SerializeField] public float timeBetweenAttacks = 1f;              //Seconds between attacks
-        [SerializeField] public float attackSpeedFraction = 1f;             //Determines how fast fighter runs at target once Attack() is initiated 1 = max
-        [SerializeField] public Transform rightHandTransform = null;        //Gives our fighter the concept of using 2hands for animations
-        [SerializeField] public Transform leftHandTransform = null;         //Left hand
-        [SerializeField] public WeaponConfig defaultWeapon = null;
-        private Health target;                                              //Health component of target for attack
+        [SerializeField] private float timeBetweenAttacks = 1f;                     //Seconds between attacks
+        [SerializeField] private float attackSpeedFraction = 1f;                    //Determines how fast fighter runs at target once Attack() is initiated 1 = max
+        [SerializeField] private Transform rightHandTransform = null;               //Gives our fighter the concept of using 2hands for animations
+        [SerializeField] private Transform leftHandTransform = null;                //Left hand transform
+        [SerializeField] private WeaponConfig defaultWeapon = null;
 
-        private Equipment equipment;
-        private float timeSinceLastAttack = Mathf.Infinity;                 //time since last attack that throttles attack animation.
-        public WeaponConfig currentWeaponConfig;                //LazyValue for weapon config to make it serailizable?
+        //Timer and weapon for saving
+        private float timeSinceLastAttack = Mathf.Infinity;                             //time since last attack that throttles attack animation.
         private LazyValue <Weapon> currentWeapon;                                       //Weapon component
+
+        //Classes Reference
+        private Health target;                                              //Health component of target for attack
+        private Mover mover;
+        private Equipment equipment;
         private Animator animator;
+        private WeaponConfig currentWeaponConfig;                           //LazyValue for weapon config to make it serailizable?
 
         public void Awake()
         {
-            animator = GetComponent<Animator>();                            //Assigns animator       SUSSSSSSSSSSSSSSSSSSSSSSSSSSSSS LINES OF CODE HE DOESN'T HAVE?
+            //Initalize components
+            mover = GetComponent<Mover>();
+            animator = GetComponent<Animator>();                          
             currentWeaponConfig = defaultWeapon;
             currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
             equipment = GetComponent<Equipment>();
-
 
             if (equipment)      //we subscribe to equipment updated event & if we have got equipment call updateWeapon
             {
                 equipment.equipmentUpdated += UpdateWeapon;
             }
+        }
+
+        public WeaponConfig GetCurrentWeaponConfig()
+        {
+            return currentWeaponConfig;
         }
 
         public void Start()
@@ -48,6 +58,7 @@ namespace RPG.Combat
 
         private void Update()
         {
+            //Just checks that target is null or dead. If we have a target but not in range we go too them and when in range we attack behavior
             timeSinceLastAttack += Time.deltaTime;                          //Vital to movement makes sure we dont stop every frame
 
             if (target == null) return;                                     //If target is null do nothing in Update
@@ -60,18 +71,18 @@ namespace RPG.Combat
             //If we are not in range keep moving OR else stop moving and then begin attack animation / event.
             if (target != null && !GetInRange(target.transform))
             {
-                GetComponent<Mover>().MoveTo(target.transform.position, attackSpeedFraction);               //Passes in Agent speed of attack.
+                mover.MoveTo(target.transform.position, attackSpeedFraction);               //Passes in Agent speed of attack.
             }
             else
             {
-                GetComponent<Mover>().Cancel();                                                             //Cancels moving behavior when in range
-                AttackBehavior();                                                                           //Calls upon attack behavior
+                mover.Cancel();                                                             //Cancels moving behavior when in range
+                AttackBehavior();                                                           //Calls upon attack behavior
             }
         }
 
         private bool GetInRange(Transform targetTransfrom)
         {
-            //Returns distance between character & target
+            //Returns bool about whether we are in distance between fighter gameobject and target
             return Vector3.Distance(transform.position, targetTransfrom.position) < currentWeaponConfig.GetRange();
         }
 
@@ -91,8 +102,8 @@ namespace RPG.Combat
 
         private void TriggerAttack()
         {
-            GetComponent<Animator>().ResetTrigger("stopAttack");      //FIRST BUG FIX WEIRD BOOL ISSUE WITH TRIGGERS RESET ATTACK BEFORE ATTACKING.
-            GetComponent<Animator>().SetTrigger("attack");
+            animator.ResetTrigger("stopAttack");      //FIRST BUG FIX WEIRD BOOL ISSUE WITH TRIGGERS RESET ATTACK BEFORE ATTACKING.
+            animator.SetTrigger("attack");
         }
 
         void Hit()

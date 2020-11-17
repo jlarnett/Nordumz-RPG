@@ -81,6 +81,14 @@ namespace RPG.Skill
             InvokeCorrectAction(rewardSkill);
         }
 
+        public void GainSkillExperience(float exp, GameObject instigator, Skill skill)
+        {
+            BuildList();
+
+            skillXpList[skill].skillExperience += exp;
+            InvokeCorrectAction(skill);
+        }
+
         private void InvokeCorrectAction(Skill skill)
         {
                 if (skill == Skill.Attack)

@@ -63,6 +63,7 @@ namespace RPG.Skill
                 experience.onDefenceExperienceGained += UpdateCurrentLevel;
                 experience.onArcheryExperienceGained += UpdateCurrentLevel;
                 experience.onMagicExperienceGained += UpdateCurrentLevel;
+                experience.onWoodcuttingExperienceGained += UpdateCurrentLevel;
             }
         }
 
@@ -75,6 +76,7 @@ namespace RPG.Skill
                 experience.onDefenceExperienceGained -= UpdateCurrentLevel;
                 experience.onArcheryExperienceGained -= UpdateCurrentLevel;
                 experience.onMagicExperienceGained -= UpdateCurrentLevel;
+                experience.onWoodcuttingExperienceGained -= UpdateCurrentLevel;
             }
         }
         

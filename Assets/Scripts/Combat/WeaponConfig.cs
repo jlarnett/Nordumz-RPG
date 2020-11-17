@@ -9,6 +9,8 @@ namespace RPG.Combat
     [CreateAssetMenu(fileName = "Weapon", menuName = "Weapons/Make New Weapon", order = 0)]  //Scriptable object!
     public class WeaponConfig : EquipableItem, IModifierProvider
     {
+        
+        [SerializeField] public Animation destroyedAnim;
         //Animation override
         [SerializeField] public AnimatorOverrideController weaponAnimatorOverride = null;       //Things that will cahnge based upon having a different weapon
         [SerializeField] public Weapon equippedPrefab = null; //Player weapon prefab
@@ -21,7 +23,6 @@ namespace RPG.Combat
         [SerializeField] public WeaponType weaponType;
 
         private const string weaponName = "Weapon";
-
 
         public Weapon Spawn(Transform rightHand, Transform leftHand, Animator animator) //Takes in hand transform & normal animator
         {

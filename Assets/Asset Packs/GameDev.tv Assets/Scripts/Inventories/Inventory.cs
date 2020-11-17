@@ -42,6 +42,22 @@ namespace GameDevTV.Inventories
             return player.GetComponent<Inventory>();
         }
 
+        public void RemoveItemFromInventory(string itemId, int amount)
+        {
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+
+                if (slots[i].item != null)
+                {
+                    if (slots[i].item.GetItemID() == itemId)
+                    {
+                        RemoveFromSlot(i, amount);
+                    }
+                }
+            }
+        }
+
         /// <summary>
         /// Could this item fit anywhere in the inventory?
         /// </summary>

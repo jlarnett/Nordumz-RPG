@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using GameDevTV.Inventories;
 using RPG.Core;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -17,7 +18,18 @@ namespace RPG.Dialogue
         private DialogueNode currentNode = null;
         private AIConversant currentConversant = null;
         private bool isChoosing = false;
+
         public event Action onConversationUpdated;
+
+
+        private Inventory playerInventory;
+
+        void Awake()
+        {
+            playerInventory = GetComponent<Inventory>();
+        }
+        
+
 
         public void StartDialogue(AIConversant newConversant, Dialogue newDialogue)
         {
@@ -41,6 +53,11 @@ namespace RPG.Dialogue
             isChoosing = false;
             currentConversant = null;   //On quitting a dialogue sets the conversant to null
             onConversationUpdated();
+        }
+
+        public void RemoveInventoryItem()
+        {
+            //playerInventory.RemoveItemFromInventory(itemId, amount);
         }
         
 
@@ -165,6 +182,8 @@ namespace RPG.Dialogue
                 trigger.Trigger(action);
             }
         }
+
+        
 
     }
 }

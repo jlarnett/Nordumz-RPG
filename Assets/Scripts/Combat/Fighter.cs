@@ -14,7 +14,7 @@ namespace RPG.Combat
     public class Fighter : MonoBehaviour, IAction, ISaveable
     {
         [SerializeField] private float timeBetweenAttacks = 1f;                     //Seconds between attacks
-        [SerializeField] private float attackSpeedFraction = 1f;                    //Determines how fast fighter runs at target once Attack() is initiated 1 = max
+        [SerializeField] private float attackSpeedFraction = 1f;                    //Determines how fast fighter runs at target once Attack() is initiated 1 = max 
         [SerializeField] private Transform rightHandTransform = null;               //Gives our fighter the concept of using 2hands for animations
         [SerializeField] private Transform leftHandTransform = null;                //Left hand transform
         [SerializeField] private WeaponConfig defaultWeapon = null;
@@ -29,6 +29,8 @@ namespace RPG.Combat
         private Equipment equipment;
         private Animator animator;
         private WeaponConfig currentWeaponConfig;                           //LazyValue for weapon config to make it serailizable?
+        private BaseStats baseStats;
+        private ActionScheduler actionScheduler;
 
         public void Awake()
         {
@@ -38,6 +40,8 @@ namespace RPG.Combat
             currentWeaponConfig = defaultWeapon;
             currentWeapon = new LazyValue<Weapon>(SetupDefaultWeapon);
             equipment = GetComponent<Equipment>();
+            baseStats = GetComponent<BaseStats>();
+            actionScheduler = GetComponent<ActionScheduler>();
 
             if (equipment)      //we subscribe to equipment updated event & if we have got equipment call updateWeapon
             {
@@ -45,10 +49,6 @@ namespace RPG.Combat
             }
         }
 
-        public WeaponConfig GetCurrentWeaponConfig()
-        {
-            return currentWeaponConfig;
-        }
 
         public void Start()
         {
@@ -80,10 +80,14 @@ namespace RPG.Combat
             }
         }
 
-        private bool GetInRange(Transform targetTransfrom)
+        public Health GetTarget()           //Returns the fighters Health Target. to EnemyHealthDisplay
         {
-            //Returns bool about whether we are in distance between fighter gameobject and target
-            return Vector3.Distance(transform.position, targetTransfrom.position) < currentWeaponConfig.GetRange();
+            return target;
+        }
+
+        public WeaponConfig GetCurrentWeaponConfig()
+        {
+            return currentWeaponConfig;
         }
 
         private void AttackBehavior()
@@ -113,7 +117,7 @@ namespace RPG.Combat
             if (target == null)
                 return;
 
-            float damage = GetComponent<BaseStats>().GetStat(Stat.Damage);           //Gets the damage from stats.Damage enum table
+            float damage = baseStats.GetStat(Stat.Damage);           //Gets the damage from stats.Damage enum table
 
             if (currentWeapon.value != null)                //We check current weapons value
             {
@@ -136,6 +140,43 @@ namespace RPG.Combat
             Hit();
         }
 
+        public bool CanAttack(GameObject combatTarget)
+        {
+            if (combatTarget == null)   //If target is = null we return false and say we cant attack
+            {
+                return false;
+            }
+
+            if (!mover.CanMoveTo(combatTarget.transform.position) && !GetInRange(combatTarget.transform)) //If we can not move to that target
+                return false;                                                       //Return false cant attack target out of range
+
+            //Assigns the health component of combatTarget. and returns if false if target is null or dead.
+            Health targetToTest = combatTarget.GetComponent<Health>();
+            return targetToTest != null && !targetToTest.IsDead();
+        }
+
+        public void Attack(GameObject combatTarget)
+        {
+            //Calls schedule to start Attack() action / cancel old action  && assigns target = target = combatTarget
+            actionScheduler.StartAction(this);
+            target = combatTarget.transform.GetComponent<Health>();
+        }
+
+        public void Cancel()
+        {
+            //Cancel target to null && cancels fighters mover also
+            target = null;
+            mover.Cancel();
+        }
+
+        public void EquipWeapon(WeaponConfig weapon)                                                              //When someone calls equipweapon we need to know What weapon scriptable object
+        {
+            currentWeaponConfig = weapon;
+            currentWeapon.value = AttachWeapon(weapon);
+        }
+
+        //Private methods---------------------------------------------------------------------------------------------------------------------------------------------------
+
         private void UpdateWeapon()
         {
             var weapon = equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;     //We get weapon from weapon slot and cast as WeaponConfig
@@ -150,56 +191,16 @@ namespace RPG.Combat
             }
         }
 
-        public bool CanAttack(GameObject combatTarget)
-        {
-            if (combatTarget == null)   //If target is = null we return false and say we cant attack
-            {
-                return false;
-            }
-
-            if (!GetComponent<Mover>().CanMoveTo(combatTarget.transform.position) && !GetInRange(combatTarget.transform)) //If we can not move to that target
-                return false;                                                       //Return false cant attack target out of range
-
-            //Assigns the health component of combatTarget. and returns if false if target is null or dead.
-            Health targetToTest = combatTarget.GetComponent<Health>();
-            return targetToTest != null && !targetToTest.IsDead();
-        }
-
-        public void Attack(GameObject combatTarget)
-        {
-            //Calls schedule to start Attack() action / cancel old action  && assigns target = target = combatTarget
-            GetComponent<ActionScheduler>().StartAction(this);
-            target = combatTarget.transform.GetComponent<Health>();
-        }
-
-        public void Cancel()
-        {
-            //Cancel target to null && cancels fighters mover also
-            target = null;
-            GetComponent<Mover>().Cancel();
-        }
-
         private void StopAttack()
         {
-            GetComponent<Animator>().ResetTrigger("attack");        //resetting attack trigger before canceling
-            GetComponent<Animator>().SetTrigger("stopAttack");
+            animator.ResetTrigger("attack");        //resetting attack trigger before canceling
+            animator.SetTrigger("stopAttack");
         }
 
-        public object CaptureState()
+        private bool GetInRange(Transform targetTransfrom)
         {
-            return currentWeaponConfig.name;
-        }
-
-        public void RestoreState(object state)
-        {
-            string weaponName = (string) state;
-            WeaponConfig weapon = UnityEngine.Resources.Load<WeaponConfig>(weaponName);         //Weaponname
-            EquipWeapon(weapon);
-        }
-
-        public Health GetTarget()           //Returns the fighters Health Target. to EnemyHealthDisplay
-        {
-            return target;
+            //Returns bool about whether we are in distance between fighter gameobject and target
+            return Vector3.Distance(transform.position, targetTransfrom.position) < currentWeaponConfig.GetRange();
         }
 
         private Weapon SetupDefaultWeapon()
@@ -211,14 +212,20 @@ namespace RPG.Combat
         private Weapon AttachWeapon(WeaponConfig weapon)
         {
             //Attaches weapon too player along with getting animator component
-            Animator animator = GetComponent<Animator>();   //Assigns animator
             return weapon.Spawn(rightHandTransform, leftHandTransform, animator);      //spawns weapon in players hand
         }
 
-        public void EquipWeapon(WeaponConfig weapon)                                                              //When someone calls equipweapon we need to know What weapon scriptable object
+        //Save methods -----------------------------------------------------------------------------------------------------------------------------------------------------------
+        public object CaptureState()
         {
-            currentWeaponConfig = weapon;
-            currentWeapon.value = AttachWeapon(weapon);
+            return currentWeaponConfig.name;
+        }
+
+        public void RestoreState(object state)
+        {
+            string weaponName = (string) state;
+            WeaponConfig weapon = UnityEngine.Resources.Load<WeaponConfig>(weaponName);         //Weaponname
+            EquipWeapon(weapon);
         }
 
     }

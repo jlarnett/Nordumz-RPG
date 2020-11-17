@@ -9,6 +9,7 @@ namespace RPG.Control
         Combat,
         UI,
         Pickup,
-        Dialogue
+        Dialogue,
+        Woodcutting
     }
 }

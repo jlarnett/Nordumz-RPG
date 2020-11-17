@@ -23,6 +23,7 @@ MonoBehaviour:
   pickup: {fileID: 5866563953189524989, guid: 859954173a0bcff46b594c7958098d76, type: 3}
   stackable: 0
   allowedEquipLocation: 5
+  destroyedAnim: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 00493ea3b2490e045aff624edd7b97f9,
     type: 2}
   equippedPrefab: {fileID: 3719266934978244160, guid: 2919f5edb9a86be4aaac367591e739fd,

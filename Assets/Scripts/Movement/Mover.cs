@@ -71,11 +71,21 @@ namespace RPG.Movement
 
         public void MoveTo(Vector3 destination,float speedFraction)
         {
+
+            if (NavMeshAgent.isOnNavMesh)
+            {
+                if (NavMeshAgent.isStopped)
+                {
+                    NavMeshAgent.isStopped = false;
+                }
+            }
+
             //Sets NavMeshAgents destination to Vector3 Destination && makes sure agents.isStopped = false -> Moves character
             NavMeshAgent.enabled = true;
             NavMeshAgent.destination = destination;
             NavMeshAgent.speed = maxSpeed * Mathf.Clamp01(speedFraction);
             NavMeshAgent.isStopped = false;
+
         }
 
         public void Cancel()

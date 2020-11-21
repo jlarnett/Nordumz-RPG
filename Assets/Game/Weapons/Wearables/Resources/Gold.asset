@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1b0ccd275f80af41a3c5b5af3e227a1, type: 3}
+  m_Name: Gold
+  m_EditorClassIdentifier: 
+  itemID: 6ddb3c4a-052e-4999-afb6-585975f4c82d
+  displayName: Gold
+  description: Holy Shit Gold! Bet my local merchant would trade some good items
+    for this.
+  icon: {fileID: -5690979520692100696, guid: 9b61e275f7cc73949bedafea760b9f7a, type: 3}
+  pickup: {fileID: 7469718789912714413, guid: 7435de590ce59ee448c072dd1f99095f, type: 3}
+  stackable: 1

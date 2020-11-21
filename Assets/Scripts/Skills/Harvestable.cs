@@ -17,27 +17,17 @@ namespace RPG.Skill
         //name
         [SerializeField] private string harvestableName;                //Harvestable Name\
 
-        //inGame Prefabs
-        [SerializeField] private GameObject basePrefab;                 //base Prefab before any chopping or such
-        [SerializeField] private GameObject harvestedPrefab;            //Harvested prefab e.g. tree fell over 
-
-        //Animator stuff
-        [SerializeField] private Animator animator;
-        [SerializeField] private string HarvestFallAnimationEventText = "fall";
-        [SerializeField] private string HarvestRespawnAnimationEventText = "respawn";
-
-        //Health vals and resource respawn time
+        //Health and resource respawn time
         [SerializeField] private float startingHealth = 10;
         [SerializeField] private float respawnTime = 5;
 
         //Rewards
         [SerializeField] private float harvestExpReward = 50;
         [SerializeField] private int maxResourcesRewarded = 1;
-
         [SerializeField] private ActionItem resourceRewardItem;
         [SerializeField] private Skill rewardSkill;
 
-        //IsHarvested bool & cursorType
+        //cursorType
         [SerializeField] private CursorType cursorType = CursorType.Woodcutting;
 
 
@@ -71,22 +61,13 @@ namespace RPG.Skill
             playerInventory.AddToFirstEmptySlot(resourceRewardItem, randomResource);
         }
 
-        public GameObject GetBasePrefab()
-        {
-            return basePrefab;
-        }
-
         public void Cancel(GameObject instigator)
         {
             if (rewardSkill == Skill.Woodcutting)
-            {
                 instigator.GetComponent<WoodCutter>().Cancel();
-            }
 
             if (rewardSkill == Skill.Mining)
-            {
                 instigator.GetComponent<Miner>().Cancel();
-            }
         }
 
         public bool CanActuate(GameObject target, PlayerController playerController)

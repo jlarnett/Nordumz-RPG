@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Normal Tree
   m_EditorClassIdentifier: 
   harvestableName: Normal Tree
-  basePrefab: {fileID: 1061756827539284, guid: ab44e2e26f6ddec4fa6d0529ef4699b0, type: 3}
+  basePrefab: {fileID: 1659504181823486, guid: c7f49c6920d49ba468b083941d79f2c0, type: 3}
   harvestedPrefab: {fileID: 0}
   animator: {fileID: 0}
   HarvestFallAnimationEventText: fall
@@ -24,5 +24,4 @@ MonoBehaviour:
   maxResourcesRewarded: 1
   resourceRewardItem: {fileID: 11400000, guid: 2b6b0541279bffb4399333824da06dc7, type: 2}
   rewardSkill: 5
-  isHarvested: 0
   cursorType: 6

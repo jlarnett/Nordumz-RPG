@@ -13,16 +13,10 @@ MonoBehaviour:
   m_Name: Copper Rock
   m_EditorClassIdentifier: 
   harvestableName: Copper Rock
-  basePrefab: {fileID: 0}
-  harvestedPrefab: {fileID: 0}
-  animator: {fileID: 0}
-  HarvestFallAnimationEventText: fall
-  HarvestRespawnAnimationEventText: respawn
   startingHealth: 50
   respawnTime: 15
   harvestExpReward: 250
   maxResourcesRewarded: 2
   resourceRewardItem: {fileID: 11400000, guid: 2b6b0541279bffb4399333824da06dc7, type: 2}
   rewardSkill: 6
-  isHarvested: 0
   cursorType: 6

@@ -40,7 +40,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7d40ea77874f2c24fb541306c00939a5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  SKillExpDisplayList: []
+  SkillXpDisplayList: []
 --- !u!114 &1415282689726101208
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74,7 +74,6 @@ MonoBehaviour:
   rightHandTransform: {fileID: 3478475489986146686}
   leftHandTransform: {fileID: 3478475489986203926}
   defaultWeapon: {fileID: 11400000, guid: 6f497b8f9fb94d8458df2d0092bb3e43, type: 2}
-  currentWeaponConfig: {fileID: 0}
 --- !u!114 &2115649567942580096
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -150,6 +149,9 @@ MonoBehaviour:
   maxNavMeshProjectionDistance: 1
   raycastRadius: 1
   teleportDistance: 40
+  MovementBufferDistance: 1
+  InteractBufferDistance: 7
+  ShowHideUI: {fileID: 0}
 --- !u!114 &3628640664318149218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -200,6 +202,32 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15fc74782b9d21b4dbba465b9b4e3d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8301562438821381158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082275035322820288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22754322fdd6cfb45bc966378e248d34, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rockBufferDistance: 4
+--- !u!114 &4906342452123373029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082275035322820288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341b9b527fc01014e9becc8096acf0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeBufferDistance: 4
 --- !u!1001 &794310164430322362
 PrefabInstance:
   m_ObjectHideFlags: 0

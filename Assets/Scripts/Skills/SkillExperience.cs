@@ -8,7 +8,7 @@ namespace RPG.Skill
     public class SkillExperience : MonoBehaviour, ISaveable
     {
         [SerializeField] public SkillHolder[] SkillXpDisplayList = null;
-        private Dictionary<Skill, SkillHolder> skillXpList;
+        private Dictionary<Skill, SkillHolder> skillXpList = null;
 
         private Skill currentSkill;
 
@@ -19,6 +19,7 @@ namespace RPG.Skill
         public event Action onArcheryExperienceGained;                                 //Expereinced gained action / delegate  -> ACTION IS A EVENT DELAGATE WITH NO RETURN TYPE
         public event Action onMagicExperienceGained;                                 //Expereinced gained action / delegate  -> ACTION IS A EVENT DELAGATE WITH NO RETURN TYPE
         public event Action onWoodcuttingExperienceGained;
+        public event Action onMiningExperienceGained;
 
         private CombatSkill combat;
 
@@ -34,17 +35,16 @@ namespace RPG.Skill
 
         private void BuildList()
         {
-            BuildArrayList();
-
             if (skillXpList != null) return;
 
             skillXpList = new Dictionary<Skill, SkillHolder>();
 
-            foreach (SkillHolder skillHolder in SkillXpDisplayList)
+            foreach (Skill skill in Enum.GetValues(typeof(Skill)))
             {
-                skillXpList.Add(skillHolder.skill, skillHolder);
+                skillXpList.Add(skill, new SkillHolder(skill));
             }
 
+            BuildArrayList();
         }
 
         private void BuildArrayList()
@@ -91,24 +91,13 @@ namespace RPG.Skill
 
         private void InvokeCorrectAction(Skill skill)
         {
-                if (skill == Skill.Attack)
-                    onAttackExperienceGained();
-
-                if (skill == Skill.Strength)
-                    onStrengthExperienceGained();
-
-                if (skill == Skill.Defence)
-                    onDefenceExperienceGained();
-
-                if (skill == Skill.Archery)
-                    onArcheryExperienceGained();
-
-                if (skill == Skill.Magic)
-                    onMagicExperienceGained();
-
-                if (skill == Skill.Woodcutting)
-                    onWoodcuttingExperienceGained();
-
+            if (skill == Skill.Attack) onAttackExperienceGained();
+            if (skill == Skill.Strength) onStrengthExperienceGained();
+            if (skill == Skill.Defence) onDefenceExperienceGained();
+            if (skill == Skill.Archery) onArcheryExperienceGained();
+            if (skill == Skill.Magic) onMagicExperienceGained();
+            if (skill == Skill.Woodcutting) onWoodcuttingExperienceGained();
+            if (skill == Skill.Mining) onMiningExperienceGained();
 
             AssignSkillArray();
         }

@@ -7,6 +7,7 @@
         Defence,
         Archery,
         Magic,
-        Woodcutting
+        Woodcutting,
+        Mining,
     }
 }

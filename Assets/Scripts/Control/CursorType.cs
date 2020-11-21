@@ -10,6 +10,7 @@ namespace RPG.Control
         UI,
         Pickup,
         Dialogue,
-        Woodcutting
+        Woodcutting,
+        Mining
     }
 }

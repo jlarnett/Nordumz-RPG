@@ -64,6 +64,7 @@ namespace RPG.Skill
                 experience.onArcheryExperienceGained += UpdateCurrentLevel;
                 experience.onMagicExperienceGained += UpdateCurrentLevel;
                 experience.onWoodcuttingExperienceGained += UpdateCurrentLevel;
+                experience.onMiningExperienceGained += UpdateCurrentLevel;
             }
         }
 
@@ -77,6 +78,8 @@ namespace RPG.Skill
                 experience.onArcheryExperienceGained -= UpdateCurrentLevel;
                 experience.onMagicExperienceGained -= UpdateCurrentLevel;
                 experience.onWoodcuttingExperienceGained -= UpdateCurrentLevel;
+                experience.onMiningExperienceGained -= UpdateCurrentLevel;
+
             }
         }
         
@@ -207,7 +210,6 @@ namespace RPG.Skill
             foreach (var item in skillLookup)
             {
                 Debug.Log("Skill: " + item.Key + "Level: " + item.Value.skillLevel);
-
             }
         }
 

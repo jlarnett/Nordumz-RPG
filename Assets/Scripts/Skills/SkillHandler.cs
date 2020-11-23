@@ -31,6 +31,7 @@ namespace RPG.Skill
 
         private void Awake()
         {
+
             combatSkill = GetComponent<CombatSkill>();
             experience = GetComponent<SkillExperience>();                 //Get the Experience component connected to gameobject
         }
@@ -48,7 +49,7 @@ namespace RPG.Skill
 
             foreach (Skill skill in Enum.GetValues(typeof(Skill)))
             {
-                skillLookup.Add(skill, new PrimarySkill(skill));
+                skillLookup.Add(skill, new PrimarySkill(skill, CalculateLevel(skill)));
             }
         }
 
@@ -58,13 +59,14 @@ namespace RPG.Skill
         {
             if (experience != null)                                             //if we have an experience object
             {
-                experience.onAttackExperienceGained += UpdateCurrentLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
-                experience.onStrengthExperienceGained += UpdateCurrentLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
-                experience.onDefenceExperienceGained += UpdateCurrentLevel;
-                experience.onArcheryExperienceGained += UpdateCurrentLevel;
-                experience.onMagicExperienceGained += UpdateCurrentLevel;
-                experience.onWoodcuttingExperienceGained += UpdateCurrentLevel;
-                experience.onMiningExperienceGained += UpdateCurrentLevel;
+                experience.onAttackExperienceGained += UpdateCombatLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
+                experience.onStrengthExperienceGained += UpdateCombatLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
+                experience.onDefenceExperienceGained += UpdateCombatLevel;
+                experience.onArcheryExperienceGained += UpdateCombatLevel;
+                experience.onMagicExperienceGained += UpdateCombatLevel;
+
+                experience.onWoodcuttingExperienceGained += UpdateSkillLevel;
+                experience.onMiningExperienceGained += UpdateSkillLevel;
             }
         }
 
@@ -72,14 +74,14 @@ namespace RPG.Skill
         {
             if (experience != null)                                             //if we have an experience object
             {
-                experience.onAttackExperienceGained -= UpdateCurrentLevel;                   //DROPS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION IN CASE IT IS DISABLED? NO CALLBACKS WHILE DISBALED
-                experience.onStrengthExperienceGained -= UpdateCurrentLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
-                experience.onDefenceExperienceGained -= UpdateCurrentLevel;
-                experience.onArcheryExperienceGained -= UpdateCurrentLevel;
-                experience.onMagicExperienceGained -= UpdateCurrentLevel;
-                experience.onWoodcuttingExperienceGained -= UpdateCurrentLevel;
-                experience.onMiningExperienceGained -= UpdateCurrentLevel;
+                experience.onAttackExperienceGained -= UpdateCombatLevel;                   //DROPS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION IN CASE IT IS DISABLED? NO CALLBACKS WHILE DISBALED
+                experience.onStrengthExperienceGained -= UpdateCombatLevel; //ADDS UPDATELEVEL TO LIST OF METHODS HELD IN EVENTACTION
+                experience.onDefenceExperienceGained -= UpdateCombatLevel;
+                experience.onArcheryExperienceGained -= UpdateCombatLevel;
+                experience.onMagicExperienceGained -= UpdateCombatLevel;
 
+                experience.onWoodcuttingExperienceGained -= UpdateSkillLevel;
+                experience.onMiningExperienceGained -= UpdateSkillLevel;
             }
         }
         
@@ -106,6 +108,11 @@ namespace RPG.Skill
             return penultimateLevel + 1;                                //return max level if makes it this fare
         }
 
+        public int GetMaxSkillLevel(Skill skill)
+        {
+            return progression.GetLevels(skill);
+        }
+
         //--------------------------------------------------------Effects & Getters--------------------------------------------
         private void LevelUpEfffect()
         {
@@ -121,13 +128,23 @@ namespace RPG.Skill
 
         //-------------------------------------------------------------tEST CODE
 
-        private void UpdateCurrentLevel()
+        private void UpdateCombatLevel()
         {
             if (combatSkill == null) return;
             currentSkill = combatSkill.GetCurrentSkill();
 
             UpdateLevel(currentSkill);
-            PrintSkillLevels();
+
+            PrintLevels();
+        }
+
+        private void UpdateSkillLevel()
+        {
+            if (currentSkill == null) return;
+            UpdateLevel(currentSkill);
+
+
+            PrintLevels();
         }
 
         private void UpdateLevel(Skill currentSkill)
@@ -138,6 +155,8 @@ namespace RPG.Skill
             {
                 UpdateSkillLevelList(currentSkill, newLevel);
                 LevelUpEfffect();
+
+                onLevelUp?.Invoke();
             }
         }
 
@@ -188,6 +207,14 @@ namespace RPG.Skill
                 }
             }
         }
+
+        private void PrintLevels()
+        {
+            foreach (var VARIABLE in skillLookup)
+            {
+                Debug.Log("Skill: " + VARIABLE.Key + " Level: " + VARIABLE.Value.skillLevel);
+            }
+        }
         
 
         public IEnumerable<float> GetAdditiveModifiers(Stat stat)
@@ -205,12 +232,9 @@ namespace RPG.Skill
             yield return 0;
         }
 
-        public void PrintSkillLevels()
+        public void SetCurrentSkill(Skill newSkill)
         {
-            foreach (var item in skillLookup)
-            {
-                Debug.Log("Skill: " + item.Key + "Level: " + item.Value.skillLevel);
-            }
+            currentSkill = newSkill;
         }
 
     }

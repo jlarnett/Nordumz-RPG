@@ -88,6 +88,9 @@ namespace RPG.Skill
         private void FinishHarvest(GameObject instigator)
         {
             harvested = true;
+
+            instigator.GetComponent<SkillHandler>().SetCurrentSkill(harvestable.GetSkill());
+
             harvestable.Cancel(instigator);
             harvestFinishDisable.SetActive(false);
         }

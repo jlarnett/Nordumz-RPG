@@ -28,4 +28,11 @@ public class PrimarySkill
         this.skill = skill;
         skillLevel = 1;
     }
+
+    
+    public PrimarySkill(Skill skill, int initialSkillValue)
+    {
+        this.skill = skill;
+        skillLevel = initialSkillValue;
+    }
 }

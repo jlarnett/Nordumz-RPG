@@ -133,7 +133,6 @@ namespace RPG.Skill
             {
                 this.skill = skill;
                 skillExperience = exp;
-
             }
 
             public SkillHolder(Skill skill)

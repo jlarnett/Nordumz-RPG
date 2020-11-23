@@ -15,11 +15,11 @@ MonoBehaviour:
   skills:
   - skill: 0
     levels:
-    - 1000000
-    - 2000000
-    - 30000000
-    - 400000
-    - 4.000005e+9
+    - 100
+    - 200
+    - 300
+    - 400
+    - 500
   - skill: 1
     levels:
     - 100
@@ -49,6 +49,13 @@ MonoBehaviour:
     - 400
     - 500
   - skill: 5
+    levels:
+    - 100
+    - 200
+    - 300
+    - 400
+    - 500
+  - skill: 6
     levels:
     - 100
     - 200

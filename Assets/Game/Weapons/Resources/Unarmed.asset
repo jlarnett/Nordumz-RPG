@@ -19,6 +19,7 @@ MonoBehaviour:
   pickup: {fileID: 0}
   stackable: 0
   allowedEquipLocation: 5
+  destroyedAnim: {fileID: 0}
   weaponAnimatorOverride: {fileID: 0}
   equippedPrefab: {fileID: 5844494971208963997, guid: 8433fe99308a03244ae605659a2ef62c,
     type: 3}
@@ -28,3 +29,4 @@ MonoBehaviour:
   isRightHanded: 0
   projectile: {fileID: 0}
   weaponType: 2
+  toolType: 1

@@ -3,6 +3,7 @@ using UnityEngine;
 using RPG.Attributes;
 using RPG.Stats;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace RPG.Combat
 {
@@ -21,6 +22,7 @@ namespace RPG.Combat
         [SerializeField] public Projectile projectile = null;
 
         [SerializeField] public WeaponType weaponType;
+        [SerializeField] public ToolType toolType;
 
         private const string weaponName = "Weapon";
 
@@ -99,6 +101,10 @@ namespace RPG.Combat
 
         }                                                                                   // Quaternion is rotation of instance?
 
+        public ToolType GetToolType()
+        {
+            return toolType;
+        }
         public float GetDamage()
         {
             return weaponDamage;
@@ -134,5 +140,13 @@ namespace RPG.Combat
                 yield return percentageBonus;
             }
         }
+    }
+
+    public enum ToolType
+    {
+        none,
+        Axe,
+        Pickaxe,
+        FishingPole,
     }
 }

@@ -21,6 +21,7 @@ MonoBehaviour:
   pickup: {fileID: 6996321283350924228, guid: a0bfde992ac9fe34eac4219933c3217e, type: 3}
   stackable: 0
   allowedEquipLocation: 5
+  destroyedAnim: {fileID: 0}
   weaponAnimatorOverride: {fileID: 22100000, guid: 3c92be4cd12106c4e9494be41e636693,
     type: 2}
   equippedPrefab: {fileID: 5844494971208963997, guid: 678bd9df18d4f49409ac840fc590e361,
@@ -30,4 +31,5 @@ MonoBehaviour:
   weaponRange: 2
   isRightHanded: 1
   projectile: {fileID: 0}
-  hasFreeFire: 0
+  weaponType: 0
+  toolType: 1

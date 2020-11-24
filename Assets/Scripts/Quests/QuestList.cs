@@ -58,6 +58,8 @@ public class QuestList : MonoBehaviour, ISaveable, IPredicateEvaluator
     {
         QuestStatus status = GetQuestStatus(quest);
 
+        if (status == null) return;
+
         if (!status.IsObjectiveComplete(objective))
         {
             status.CompleteObjective(objective);

@@ -29,8 +29,6 @@ namespace RPG.Dialogue
             playerInventory = GetComponent<Inventory>();
         }
         
-
-
         public void StartDialogue(AIConversant newConversant, Dialogue newDialogue)
         {
 

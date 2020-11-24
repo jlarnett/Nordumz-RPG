@@ -8,7 +8,8 @@ namespace RPG.UI
     {
         [SerializeField] private TextMeshProUGUI skillName;
         [SerializeField] private TextMeshProUGUI skillLevel;
-        [SerializeField] private Skill.Skill skill;
+
+        private Skill.Skill skill;
         private SkillHandler skillHandler;
 
         private void OnEnable() //Called around same time as awake but always after
@@ -52,6 +53,11 @@ namespace RPG.UI
         {
             skillName.text = null;
             skillLevel.text = null;
+        }
+
+        public void SetCurrentSkill(Skill.Skill newSkill)
+        {
+            skill = newSkill;
         }
     }
 }

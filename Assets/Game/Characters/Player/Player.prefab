@@ -165,6 +165,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventorySize: 40
+--- !u!114 &4906342452123373029
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4082275035322820288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 341b9b527fc01014e9becc8096acf0f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  treeBufferDistance: 2
 --- !u!114 &7108757854125872858
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,18 +203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: Johnathan
---- !u!114 &9008077395037530047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4082275035322820288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 15fc74782b9d21b4dbba465b9b4e3d80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &8301562438821381158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -214,8 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22754322fdd6cfb45bc966378e248d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rockBufferDistance: 4
---- !u!114 &4906342452123373029
+  rockBufferDistance: 2
+--- !u!114 &9008077395037530047
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -224,10 +225,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4082275035322820288}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 341b9b527fc01014e9becc8096acf0f6, type: 3}
+  m_Script: {fileID: 11500000, guid: 15fc74782b9d21b4dbba465b9b4e3d80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  treeBufferDistance: 4
 --- !u!1001 &794310164430322362
 PrefabInstance:
   m_ObjectHideFlags: 0

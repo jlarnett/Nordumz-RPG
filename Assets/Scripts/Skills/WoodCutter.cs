@@ -1,4 +1,6 @@
-﻿using RPG.Core;
+﻿using GameDevTV.Inventories;
+using RPG.Combat;
+using RPG.Core;
 using RPG.Movement;
 using UnityEngine;
 
@@ -14,12 +16,14 @@ namespace RPG.Skill
         private Mover mover;
         private Animator animator;
         private ActionScheduler actionScheduler;
+        private Equipment equipment;
 
         void Awake()
         {
             mover = GetComponent<Mover>();
             animator = GetComponent<Animator>();
             actionScheduler = GetComponent<ActionScheduler>();
+            equipment = GetComponent<Equipment>();
         }
 
 
@@ -90,6 +94,11 @@ namespace RPG.Skill
 
         public bool CanAction(GameObject target)
         {
+            var weapon = equipment.GetItemInSlot(EquipLocation.Weapon) as WeaponConfig;     //We get weapon from weapon slot and cast as WeaponConfig
+            if (weapon == null) return false;
+
+            if (weapon.GetToolType() != ToolType.Axe) return false;
+
             if (target == null) //If target is = null we return false and say we cant attack
             {
                 return false;

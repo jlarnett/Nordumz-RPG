@@ -19,10 +19,16 @@ namespace RPG.UI
         [SerializeField] private TextMeshProUGUI conversantName;
 
 
+        void Awake()
+        {
+            playerConversant = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerConversant>();
+        }
+
+
+
         // Start is called before the first frame update
         void Start()
         {
-            playerConversant = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerConversant>();
             playerConversant.onConversationUpdated += UpdateUI;
 
             nextButton.onClick.AddListener(() => playerConversant.Next());
@@ -37,7 +43,7 @@ namespace RPG.UI
             //Controls dialogue UI flow. Determines if its AI turn or player based on dialogue and what to do in those scenarios
 
             gameObject.SetActive(playerConversant.IsActive());
-
+            
             if (!playerConversant.IsActive())    //If player conversant class isnt active because no dialogue return dont updateUI Stops null reference
             {
                 return;

@@ -12,9 +12,6 @@ namespace RPG.Dialogue
         [SerializeField] private List<DialogueNode> nodes = new List<DialogueNode>();           //List of DialogueNodes storing dialogues
         [SerializeField] Vector2 newNodeOffset = new Vector2(250, 0);
 
-
-
-
         Dictionary<string, DialogueNode> nodeLookup = new Dictionary<string, DialogueNode>();
 
         private void OnValidate()       //Called when we modified some data in this dialogue or when scriptable object is loaded

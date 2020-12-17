@@ -130,7 +130,7 @@ namespace RPG.Dialogue
             currentNode = children[randomIndex];
             TriggerEnterAction();
 
-            onConversationUpdated();
+            onConversationUpdated?.Invoke();
         }
 
         public bool HasNext()

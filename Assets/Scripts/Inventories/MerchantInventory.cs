@@ -24,6 +24,11 @@ namespace GameDevTV.Inventories
             public int sellPrice;
             public int BuyPrice;
         }
+
+        public IEnumerable GetItems()
+        {
+            return ItemList;
+        }
     }
 }
 

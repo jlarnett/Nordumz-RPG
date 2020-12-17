@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using GameDevTV.Inventories;
+using RPG.Attributes;
+using RPG.Combat;
 using RPG.Control;
 using UnityEngine;
 
@@ -11,6 +13,10 @@ namespace RPG.Inventories
         [SerializeField] MerchantInventory merchantInventory = null;
         [SerializeField] string storeName = null;
 
+        private GameObject player;
+        private Health health;
+        private Fighter fighter;
+
 
         //This need to hold an initialState merchantInventory
         //This needs to track the Merchants current Inventory / GOLD
@@ -19,9 +25,12 @@ namespace RPG.Inventories
         //We need to somehow update the UI
 
 
-
-
-
+        void Awake()
+        {
+            player = GameObject.FindGameObjectWithTag("Player");
+            health = GetComponent<Health>();
+            fighter = GetComponent<Fighter>();
+        }
 
 
 
@@ -44,8 +53,13 @@ namespace RPG.Inventories
 
         public bool HandleRaycast(PlayerController callingController)
         {
-            if (merchantInventory == null) return false;
 
+            if (health.IsDead()) return false;
+            if (merchantInventory == null || enabled || fighter.enabled) return false;
+
+            if (Input.GetMouseButtonDown(0))
+            {
+            }
             return false;
         }
 

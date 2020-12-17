@@ -29,26 +29,43 @@ namespace RPG.Control
         private Health health;
         private PlayerConversant playerConversant;
 
+
+        //Initialize components
         private void Awake()
         {
             //Initialize components
             health = GetComponent<Health>();            
             mover = GetComponent<Mover>();
         }
+
+
+
+
+
+
         void Update()
         {
             //On Update Interaction Manager function. UI, Components, Movement
             if (InteractWithUI()) return;                   //If player is interacting with UI stop here and dont interact with anything else.      //This is here to give player option to interact with UI while dead even
 
+            //If dead do nothing basically
             if(health.IsDead())
             {
                 SetCursor(CursorType.None);                 //movement cursor cause it is best
                 return;                                     //if character is dead do no interacting at all. - So takes control away if dead
             }
 
+            //Sets the special ability key
             CheckSpecialAbilityKeys();                      //Update
 
+
+            //interact with compoonent
             if (InteractWithComponent()) return;            //Interact with IRAYCASTABLE components in the world
+
+
+
+
+            //InteractWithMovement
             if (InteractWithMovement())
             {
                 if (Input.GetMouseButtonDown(0))            //This handles canceling dialogue if the player clicks to run after dialogue starts.
@@ -59,6 +76,7 @@ namespace RPG.Control
                 return;
             }                 
 
+            //Set Cursor
             SetCursor(CursorType.None);                         //Default Cursor set if we make it this far in Update
         }
 
